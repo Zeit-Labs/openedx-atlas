@@ -13,7 +13,7 @@ parser_definition() {
 
 parser_definition_pull() {
 	setup   PULL_REST help:usage_pull -- \
-		"Usage: atlas pull [options...] [directories...]"
+		"Usage: atlas pull [options...] [directory mappings...]"
 	msg -- 'Options:'
 	param		CONFIG			--config			-- "path to alternative atlas.yaml configuration file"
 	param		BRANCH		-b	--branch			-- "A branch of translation files"
