@@ -49,19 +49,21 @@ jobs:
     - name: print git version
       run: git --version
 
-    - name: install shellspec
-      run: curl -fsSL https://git.io/shellspec | sh
-
     - name: install shellcheck
       run: |
         sudo apt-get update
         sudo apt-get install -y shellcheck
-
-    - name: install getoptions and gengetoptions
+    - name: Set up Homebrew
+      id: set-up-homebrew
+      uses: Homebrew/actions/setup-homebrew@master
+    - name: install shellspec
       run: |
-        wget https://github.com/ko1nksm/getoptions/releases/download/latest/getoptions -O /usr/local/bin/getoptions
-        wget https://github.com/ko1nksm/getoptions/releases/download/latest/gengetoptions -O /usr/local/bin/gengetoptions
-        chmod +x /usr/local/bin/getoptions /usr/local/bin/gengetoptions
+        brew tap shellspec/shellspec
+        brew install shellspec
+    - name: install getoptions
+      run: |
+        brew tap ko1nksm/getoptions
+        brew install getoptions
 
     - uses: actions/checkout@v3
     - name: run integration tests
