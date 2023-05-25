@@ -54,9 +54,8 @@ jobs:
 
     - name: install shellcheck
       run: |
-        wget -qO- "https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.x86_64.tar.xz" | tar -xJv
-        sudo cp shellcheck-stable/shellcheck /usr/local/bin/
-        shellcheck --version
+        sudo apt-get update
+        sudo apt-get install -y shellcheck
 
     - name: install getoptions and gengetoptions
       run: |
@@ -64,5 +63,6 @@ jobs:
         wget https://github.com/ko1nksm/getoptions/releases/download/latest/gengetoptions -O /usr/local/bin/gengetoptions
         chmod +x /usr/local/bin/getoptions /usr/local/bin/gengetoptions
 
+    - uses: actions/checkout@v3
     - name: run integration tests
       run: make performance_tests
