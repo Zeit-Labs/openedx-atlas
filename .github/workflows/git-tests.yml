@@ -1,0 +1,68 @@
+name: Git tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "**" ]
+
+
+jobs:
+  git-tests:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - name: ubuntu-22.04 default git
+            os: ubuntu-22.04
+            git_version: default
+
+          - name: ubuntu-20.04 default git
+            os: ubuntu-20.04
+            git_version: default
+
+          - name: ubuntu-22.04 @ v2.40.0
+            git_version: ubuntu-22.04
+            git: 2.40.0
+
+          - name: ubuntu-20.04 @ v2.40.0
+            git_version: ubuntu-20.04
+            git: 2.40.0
+
+          - name: ubuntu-20.04 @ v2.25.0
+            git_version: ubuntu-20.04
+            git: 2.25.0
+    steps:
+    - name: install custom version of git
+      run: |
+        wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-${{ matrix.git }}.tar.gz
+        tar -xzf git-${{ matrix.git }}.tar.gz
+        cd git-${{ matrix.git }}
+        make configure
+        ./configure --prefix=/usr/local
+        make all
+        sudo make install
+
+      if: matrix.git_version != 'default'
+
+    - name: print git version
+      run: git --version
+
+    - name: install shellspec
+      run: curl -fsSL https://git.io/shellspec | sh
+
+    - name: install shellcheck
+      run: |
+        wget -qO- "https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.x86_64.tar.xz" | tar -xJv"
+        sudo cp shellcheck-stable/shellcheck /usr/local/bin/
+        shellcheck --version
+
+    - name: install getoptions and gengetoptions
+      run: |
+        wget https://github.com/ko1nksm/getoptions/releases/download/latest/getoptions -O /usr/local/bin/getoptions
+        wget https://github.com/ko1nksm/getoptions/releases/download/latest/gengetoptions -O /usr/local/bin/gengetoptions
+        chmod +x /usr/local/bin/getoptions /usr/local/bin/gengetoptions
+
+    - name: run integration tests
+      run: make performance_tests
