@@ -23,22 +23,22 @@ jobs:
             git_version: default
 
           - name: ubuntu-22.04 @ v2.40.0
-            git_version: ubuntu-22.04
-            git: 2.40.0
+            os: ubuntu-22.04
+            git_version: 2.40.0
 
           - name: ubuntu-20.04 @ v2.40.0
-            git_version: ubuntu-20.04
-            git: 2.40.0
+            os: ubuntu-20.04
+            git_version: 2.40.0
 
           - name: ubuntu-20.04 @ v2.25.0
-            git_version: ubuntu-20.04
-            git: 2.25.0
+            os: ubuntu-20.04
+            git_version: 2.25.0
     steps:
     - name: install custom version of git
       run: |
-        wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-${{ matrix.git }}.tar.gz
-        tar -xzf git-${{ matrix.git }}.tar.gz
-        cd git-${{ matrix.git }}
+        wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-${{ matrix.git_version }}.tar.gz
+        tar -xzf git-${{ matrix.git_version }}.tar.gz
+        cd git-${{ matrix.git_version }}
         make configure
         ./configure --prefix=/usr/local
         make all
@@ -54,7 +54,7 @@ jobs:
 
     - name: install shellcheck
       run: |
-        wget -qO- "https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.x86_64.tar.xz" | tar -xJv"
+        wget -qO- "https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.x86_64.tar.xz" | tar -xJv
         sudo cp shellcheck-stable/shellcheck /usr/local/bin/
         shellcheck --version
 
