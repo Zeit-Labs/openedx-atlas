@@ -11,6 +11,7 @@ jobs:
   git-tests:
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 8
     strategy:
       matrix:
         include:
@@ -68,4 +69,4 @@ jobs:
       run: git --version
 
     - name: run integration tests
-      run: make performance_tests
+      run: make integration_tests
