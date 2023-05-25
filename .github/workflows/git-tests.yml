@@ -9,31 +9,30 @@ on:
 
 jobs:
   git-tests:
-    name: ${{ matrix.name }}
+    name: "${{ matrix.os }}-git-v${{ matrix.git_version }}"
     runs-on: ${{ matrix.os }}
     timeout-minutes: 8
     strategy:
       matrix:
         include:
-          - name: ubuntu-22.04 default git
-            os: ubuntu-22.04
+          - os: ubuntu-22.04
             git_version: default
 
-          - name: ubuntu-20.04 default git
-            os: ubuntu-20.04
+          - os: ubuntu-20.04
             git_version: default
 
-          - name: ubuntu-22.04 @ v2.40.0
-            os: ubuntu-22.04
-            git_version: 2.40.0
+          - os: ubuntu-22.04
+            git_version: 2.36.0
 
-          - name: ubuntu-20.04 @ v2.40.0
-            os: ubuntu-20.04
-            git_version: 2.40.0
+          - os: ubuntu-20.04
+            git_version: 2.36.0
 
-          - name: ubuntu-20.04 @ v2.25.0
-            os: ubuntu-20.04
+          - os: ubuntu-20.04
+            git_version: 2.33.0
+
+          - os: ubuntu-20.04
             git_version: 2.25.0
+
     steps:
     - uses: actions/checkout@v3
 
