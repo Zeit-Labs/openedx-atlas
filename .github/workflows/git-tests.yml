@@ -36,6 +36,7 @@ jobs:
     steps:
     - name: install custom version of git
       run: |
+        sudo apt install gettext
         wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-${{ matrix.git_version }}.tar.gz
         tar -xzf git-${{ matrix.git_version }}.tar.gz
         cd git-${{ matrix.git_version }}
