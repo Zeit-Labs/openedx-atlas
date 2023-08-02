@@ -76,6 +76,7 @@ Will result in the following tree:
         └── fr_CA.json
 
 More examples are available in the repository docs: https://github.com/openedx/openedx-translations .
+
 "
 
 	setup       REST help:usage -- "${_ATLAS_USAGE_HELP}" ''
@@ -223,6 +224,7 @@ Will result in the following tree:
         └── fr_CA.json
 
 More examples are available in the repository docs: https://github.com/openedx/openedx-translations .
+
 
 
 
