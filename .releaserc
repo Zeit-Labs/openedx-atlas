@@ -1,6 +1,6 @@
 {
     "branches": [
-        "pip"
+        "main"
     ],
     "plugins": [
         "@semantic-release/commit-analyzer",
