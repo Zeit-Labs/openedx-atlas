@@ -23,10 +23,12 @@ jobs:
         npx semantic-release@21.0.7 --dry-run | tee semantic-release-dry-run.txt
 
         if grep -q 'no new version is released' semantic-release-dry-run.txt; then
-          echo "RELEASE_NEEDED=no" >> $GITHUB_ENV
+          RELEASE_NEEDED=no
         else
-          echo "RELEASE_NEEDED=yes" >> $GITHUB_ENV
+          RELEASE_NEEDED=yes
         fi
+
+        echo "RELEASE_NEEDED=$RELEASE_NEEDED" >> $GITHUB_ENV
 
         NEXT_VERSION=$(
           cat semantic-release-dry-run.txt | \
