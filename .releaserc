@@ -2,6 +2,7 @@
     "branches": [
         "main"
     ],
+    "repositoryUrl": "git@github.com:Zeit-Labs/openedx-atlas.git",
     "plugins": [
         "@semantic-release/commit-analyzer",
         "@semantic-release/release-notes-generator",
