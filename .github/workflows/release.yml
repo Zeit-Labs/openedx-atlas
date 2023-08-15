@@ -44,6 +44,7 @@ jobs:
       if: env.RELEASE_NEEDED == 'yes' && env.NEXT_VERSION == ''
       run: |
         echo "ERROR: Could not determine next version from semantic-release dry-run output:"
+        cat semantic-release-dry-run.txt
         exit 1
 
 #    - name: Release to both GitHub and npm
