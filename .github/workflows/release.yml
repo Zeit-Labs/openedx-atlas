@@ -1,8 +1,8 @@
 name: Release CI
 on:
   push:
-#    branches:
-#    - main
+    branches:
+    - main
 
 jobs:
   release:
@@ -46,41 +46,16 @@ jobs:
         echo "ERROR: Could not determine next version from semantic-release dry-run output."
         exit 1
 
-#    - name: Release to both GitHub and npm
-#      if: env.NEXT_VERSION
-#      env:
-#        GITHUB_TOKEN: ${{ github.token }}
-#        NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN }}
-#      run: |
-#        # Hardcode the next tag version in the atlas script
-#        sed -i -e "s/_ATLAS_VERSION=.*/_ATLAS_VERSION=\"$NEXT_VERSION\"  # Tagged by release.yml/" atlas
-#
-#        echo "DEBUG: 'atlas --version' output is '$(./atlas --version)'"  # Debug version number
-#
-#        # Actually create the tag and upload the atlas script
-#        npx semantic-release@21.0.7
-
-    # Release to PyPi
-    - name: Install dependencies
-      run: pip install pip
-
-    - name: Install Dependencies
-      run: pip install setuptools wheel
-
-    - name: Build package
-      run: python setup.py sdist bdist_wheel
-
-    - name: Update the tag version in setup.py
+    - name: Release to both GitHub and npm
       if: env.NEXT_VERSION
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+        NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN }}
       run: |
-        NEXT_VERSION_PYPI=${NEXT_VERSION:1}  # Remove the leading 'v' to match PyPi's versioning scheme
-        sed -i -e "s/version=.*,/version='$NEXT_VERSION_PYPI'  # tagged by release.yml,/" setup.py
-        cat setup.py
+        # Hardcode the next tag version in the atlas script
+        sed -i -e "s/_ATLAS_VERSION=.*/_ATLAS_VERSION=\"$NEXT_VERSION\"  # Tagged by release.yml/" atlas
 
-    - name: Publish to PyPi
-      if: env.NEXT_VERSION
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-#        user: __token__
-#        password: ${{ secrets.PYPI_UPLOAD_TOKEN }}
-        repository_url: https://test.pypi.org/legacy/
+        echo "DEBUG: 'atlas --version' output is '$(./atlas --version)'"  # Debug version number
+
+        # Actually create the tag and upload the atlas script
+        npx semantic-release@21.0.7
